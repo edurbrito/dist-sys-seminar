@@ -241,8 +241,9 @@ and optimizations to this solution have been proposed in the literature.
 The first asynchronous consensus algorithm was later proposed by Castro and Liskov in \cite{castro1999practical}. 
 And naturally, after that work, many other asynchronous consensus algorithms have appeared. 
 However, all of them are based on the assumption that the number of faulty processes is less than 
-a certain threshold. Additionally, the assumption of a known set of participants is also made. This is a very strong assumption, 
-as it is not always possible to know the participants beforehand as they may, for example, participate anonymously, or dynamically.
+a certain threshold. Additionally, the assumption of a known set of participants is also made, as well as their roles 
+in the consensus protocol. These are very strong assumptions that limit the challenges that can be addressed, 
+for example, the impossibility to know the participants beforehand as they may participate anonymously, or dynamically.
 
 \subsection{Permissionless Consensus}
 
@@ -251,7 +252,8 @@ more than potentiated the revolution and what we now call the permissionless con
 finally born. Without forgetting the previous attempts, the first practical permissionless consensus algorithm was 
 proposed by Nakamoto in \cite{nakamoto2008bitcoin}. It is a proof-of-work consensus protocol that resembles a "replicated 
 state machine" where the independent participants reach agreement not only about transactional values, 
-but also about their order. "Proof-of-work is essentially one-CPU-one-vote" and this is the novelty 
+but also about their order - naturality forming the underlying structure of what is now known as a blockchain. 
+"Proof-of-work is essentially one-CPU-one-vote" and this is the novelty 
 introduced by Bitcoin \cite{pass2016hybrid,pass2016hybrid2}. The focus shifted 
 for decentralized systems and after proof-of-work many other consensus mechanisms have been proposed, 
 based on different consensus units, like proof-of-stake, proof-of-space, proof-of-burn, etc. The chaotic 
@@ -261,6 +263,75 @@ and, among those, some focused their efforts on mechanisms that may work in reso
 This paper will try to identify the common conclusions from these comparisons, while looking into the state-of-the-art and novel approaches for running permissionless
 consensus protocols in mobile and edge devices.
 
+\section{The need for permissionless consensus}
+
+\subsection{Permissioned vs Permissionless}
+
+Following the line of the previous sections, it has been reasoned about the need 
+for permissionless consensus when there are already well known and established consensus protocols
+that work in trusted environments \cite{castro1999practical}. However, even those protocols have
+their own limitations, not only in terms of trust, fault-tolerance, centrality, permissioning,
+or bottlenecking, but also in terms of scalability \cite{miller2016honey}. Trying to put some effort on decentralization, 
+Byzantine-Fault-Tolerant consensus protocols are not known for their performance when the network grows
+in size. The more participants there are, the more messages need to be exchanged
+between them, and the more time it takes to reach consensus, even if assuring deterministic finality \cite{decker2016bitcoin}. 
+This is a problem that is not only related to the number of participants, but also to the
+communication fashion and bandwidth, and the computational capacity of the devices that
+participate in the consensus protocol. 
+Summing up, the need for permissionless consensus is then justified by the fact that
+permissioned protocols are not compatible with the requirements of the new generation of
+distributed systems, especially in the context of blockchain networks. 
+These requirements include dealing with today's sparse networks of anonymously and dynamically
+participating devices, without interrupting consensus and while generally battling Sybil attacks \cite{survey-dist-consensus}.
+Fundamentally, the permissionless consensus problem is the need for a consensus protocol that
+can be run in a "zero-trust" environment, where the participants are unknown and untrusted,
+and where the network is sparse and unpredictably unreliable.
+
+\subsection{Allowances and goals}
+
+Technically, permissionless environments allow for larger networks
+that depit lower connectivity between the participants. Operationally,
+everything is expected to happen in an asynchronous or partially synchronous fashion, 
+and the number of transactions is expected to be smaller than the 
+permissioned counterparts. Nevertheless, participation is free, and the
+governance is not centralized, but rather distributed and public. 
+The identity of the participants is secured or semi-secure as it often relies on
+pseudonymity for protecting the nodes' identity, while enabling full transparency 
+in regards to the rest of the network content and operation \cite{xiao2019distributed}.
+The goal of permissionless consensus is, as generally for any consensus protocol, to reach
+agreement on a single value, or a set of values. However, due to the nature of the
+protocols, the values that are agreed upon end up establishing the serialization of the
+transactions that are executed in the network, and so establishing time consciousness and 
+total order of the events.
+
+As pointed out by \cite{xiao2019distributed} and then referenced by \cite{survey-dist-consensus}, 
+similarly to the permissioned counterparts, permissionless consensus protocols 
+aim at achieving the following properties: Termination, Agreement, Validity, 
+and Integrity. Without going into a lot of details, of these properties, 
+Agreement and Integrity are the most important ones, as they are the ones that
+guarantee the correctness of the consensus protocols. Termination and Validity
+are generally related to any classic consensus problem.
+
+\subsection{The building blocks of permissionless consensus}
+
+Also described in \cite{survey-dist-consensus}, very concisely, the 
+way to achieve an operating protocol, as seen in the mainstream blockchain
+networks, is by interchaining the generation of the agreeable value, 
+in this particular case, a block and its proof, with the dissemination of 
+the information to the rest of the network, followed by the eventual validation and 
+acceptance of the block by the rest of the nodes. This is the moment when consensus is reached.
+Nevertheless, during the whole process, a fair and somewhat predictable incentive mechanism 
+is also needed, that rewards the participants for their honest effort in reaching consensus, and
+punishes the ones that are not behaving correctly. These incentives are of major importance
+in this very context of permissionless consensus. 
+These building blocks form the basis of the inner functioning of Bitcoin itself \cite{nakamoto2008bitcoin},
+and are replicated with some variations in the other permissionless networks.
+For example, there are some networks that do not have a proof-of-work mechanism,
+but rather a proof-of-stake, or a proof-of-space, or a proof-of-burn mechanism, etc.
+when it comes to the generation of the block and its existential and verifiable proof.
+All of the other pillars are generally the same \cite{survey-dist-consensus}.
+The next sections will try to give a more detailed overview of these 
+block generation proof units.
 
 % Subsection text here.
 
