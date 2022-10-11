@@ -55,7 +55,8 @@
 
 %\usepackage{amsmath}
 
-%\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 %\usepackage{array}
 
@@ -73,6 +74,12 @@
 
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
+
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
+
+\newcommand{\LineComment}[1]{\State \texttt{/* #1 */}}
 
 
 \begin{document}
@@ -195,7 +202,7 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 \IEEEPARstart{L}{ong} has been the time when consensus started 
 to be defined as a fundamental problem of distributed systems \cite{pease1980reaching, lamport2019byzantine, lamport1983weak}. 
 Generally, consensus means reaching an agreement between multiple parties 
-in the potential presence of faulty individuals. As per multi-agent systems, 
+in the potential presence of faulty individuals. As per multiagent systems, 
 interacting over computer networks, consensus is thought to be the result 
 of a coordination effort such that those parties agree on some value at a 
 given moment. Achieving consensus implies that the system shall be reliable 
@@ -231,7 +238,7 @@ synchronous systems, where the communication between the processes is reliable, 
 delay is bounded. However, these initial attempts failed to cover the different types of 
 faulty behaviour. Along with the establishment of the famous Byzantine Generals Problem, 
 the first solutions, not only for dealing with treason, but also for unreliable communication 
-channels, or any other kind of arbitrary byzantine behaviour, were 
+channels, or any other kind of arbitrary Byzantine behaviour, were 
 also proposed by Lamport in \cite{lamport2019byzantine,lamport1983weak}. The solution was a synchronous 
 mechanism that used a set of leaders to reach consensus. Multiple practical implementations 
 and optimizations to this solution have been proposed in the literature. 
@@ -252,7 +259,7 @@ more than potentiated the revolution and what we now call the permissionless con
 finally born. Without forgetting the previous attempts, the first practical permissionless consensus algorithm was 
 proposed by Nakamoto in \cite{nakamoto2008bitcoin}. It is a proof-of-work consensus protocol that resembles a "replicated 
 state machine" where the independent participants reach agreement not only about transactional values, 
-but also about their order - naturality forming the underlying structure of what is now known as a blockchain. 
+but also about their order - naturally forming the underlying structure of what is now known as a blockchain. 
 "Proof-of-work is essentially one-CPU-one-vote" and this is the novelty 
 introduced by Bitcoin \cite{pass2016hybrid,pass2016hybrid2}. The focus shifted 
 for decentralized systems and after proof-of-work many other consensus mechanisms have been proposed, 
@@ -269,9 +276,9 @@ consensus protocols in mobile and edge devices.
 
 Following the line of the previous sections, it has been reasoned about the need 
 for permissionless consensus when there are already well known and established consensus protocols
-that work in trusted environments \cite{castro1999practical}. However, even those protocols have
-their own limitations, not only in terms of trust, fault-tolerance, centrality, permissioning,
-or bottlenecking, but also in terms of scalability \cite{miller2016honey}. Trying to put some effort on decentralization, 
+that work in trusted environments \cite{castro1999practical, miller2016honey}. However, even those protocols have
+their own limitations, not only in terms of trust, fault-tolerance, centrality, permissions,
+or bottlenecks, but also in terms of scalability \cite{miller2016honey}. Trying to put some effort on decentralization, 
 Byzantine-Fault-Tolerant consensus protocols are not known for their performance when the network grows
 in size. The more participants there are, the more messages need to be exchanged
 between them, and the more time it takes to reach consensus, even if assuring deterministic finality \cite{decker2016bitcoin}. 
@@ -282,15 +289,15 @@ Summing up, the need for permissionless consensus is then justified by the fact 
 permissioned protocols are not compatible with the requirements of the new generation of
 distributed systems, especially in the context of blockchain networks. 
 These requirements include dealing with today's sparse networks of anonymously and dynamically
-participating devices, without interrupting consensus and while generally battling Sybil attacks \cite{survey-dist-consensus}.
+participating devices, without interrupting consensus and while battling Sybil attacks \cite{survey-dist-consensus}.
 Fundamentally, the permissionless consensus problem is the need for a consensus protocol that
-can be run in a "zero-trust" environment, where the participants are unknown and untrusted,
+can be run in a distributed and decentralized environment, where the participants are unknown and untrusted,
 and where the network is sparse and unpredictably unreliable.
 
 \subsection{Allowances and goals}
 
 Technically, permissionless environments allow for larger networks
-that depit lower connectivity between the participants. Operationally,
+that depict lower connectivity between the participants. Operationally,
 everything is expected to happen in an asynchronous or partially synchronous fashion, 
 and the number of transactions is expected to be smaller than the 
 permissioned counterparts. Nevertheless, participation is free, and the
@@ -298,7 +305,7 @@ governance is not centralized, but rather distributed and public.
 The identity of the participants is secured or semi-secure as it often relies on
 pseudonymity for protecting the nodes' identity, while enabling full transparency 
 in regards to the rest of the network content and operation \cite{xiao2019distributed}.
-The goal of permissionless consensus is, as generally for any consensus protocol, to reach
+The goal of permissionless consensus, as generally for any consensus protocol, is to reach
 agreement on a single value, or a set of values. However, due to the nature of the
 protocols, the values that are agreed upon end up establishing the serialization of the
 transactions that are executed in the network, and so establishing time consciousness and 
@@ -316,7 +323,7 @@ are generally related to any classic consensus problem.
 
 Also described in \cite{survey-dist-consensus}, very concisely, the 
 way to achieve an operating protocol, as seen in the mainstream blockchain
-networks, is by interchaining the generation of the agreeable value, 
+networks, is by chaining the generation of the agreeable value, 
 in this particular case, a block and its proof, with the dissemination of 
 the information to the rest of the network, followed by the eventual validation and 
 acceptance of the block by the rest of the nodes. This is the moment when consensus is reached.
@@ -325,13 +332,47 @@ is also needed, that rewards the participants for their honest effort in reachin
 punishes the ones that are not behaving correctly. These incentives are of major importance
 in this very context of permissionless consensus. 
 These building blocks form the basis of the inner functioning of Bitcoin itself \cite{nakamoto2008bitcoin},
-and are replicated with some variations in the other permissionless networks.
+and are replicated with some variations in the other permissionless networks \cite{buterin2014next}.
 For example, there are some networks that do not have a proof-of-work mechanism,
 but rather a proof-of-stake, or a proof-of-space, or a proof-of-burn mechanism, etc.
-when it comes to the generation of the block and its existential and verifiable proof.
+when it comes to the generation of the block and its existential and later verifiable proof.
 All of the other pillars are generally the same \cite{survey-dist-consensus}.
 The next sections will try to give a more detailed overview of these 
 block generation proof units.
+
+\section{Proof-of-Work as a reference}
+
+\subsection{The block generation}
+
+In the classical Nakamoto consensus protocol, the generation of a block, to be proposed
+for further network agreement, complies with the unit of computational work needed to
+create, or rather find, a verifiable proof of the effort spent on creating the block \cite{nakamoto2008bitcoin}. 
+This essentially requires brute forcing the finding of a cryptographic hash value for the
+aggregation of the block information with a nonce such that this hash value satisfies
+a difficulty threshold, which gets adjusted dynamically over time, to maintain the network overall 
+requirement for the block generation interval \cite{survey-dist-consensus}.
+
+Mitigation of Sybil attacks
+
+\begin{algorithm}
+\caption[short]{BlockGeneration}
+\begin{algorithmic}[1]
+  \Function {}{}
+    \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
+    \Indent
+      \State $| \ Hash \ of \ the \ last \ Block$
+      \State $| \ Timestamp$
+      \State $| \ Other$
+    \EndIndent
+    
+    \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
+    \While{$Hash(BlockHeader \ | \ nonce) \geq target$}
+    \State Increment $nonce$
+    \EndWhile
+    \State \Return new block
+  \EndFunction
+\end{algorithmic}
+\end{algorithm}
 
 % Subsection text here.
 
