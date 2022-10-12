@@ -203,7 +203,7 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 \IEEEPARstart{L}{ong} has been the time when consensus started 
 to be defined as a fundamental problem of distributed systems \cite{pease1980reaching, lamport2019byzantine, lamport1983weak}. 
 Generally, consensus means reaching an agreement between multiple parties 
-in the potential presence of faulty individuals. As per multiagent systems, 
+in the potential presence of faulty individuals. As per multi-agent systems, 
 interacting over computer networks, consensus is thought to be the result 
 of a coordination effort such that those parties agree on some value at a 
 given moment. Achieving consensus implies that the system shall be reliable 
@@ -237,9 +237,9 @@ The authors defined consensus as the problem of agreeing on a single value among
 in the presence of faulty entities. The first consensus algorithms were designed for 
 synchronous systems, where the communication between the processes is reliable, and the 
 delay is bounded. However, these initial attempts failed to cover the different types of 
-faulty behaviour. Along with the establishment of the famous Byzantine Generals Problem, 
+faulty behavior. Along with the establishment of the famous Byzantine Generals Problem, 
 the first solutions, not only for dealing with treason, but also for unreliable communication 
-channels, or any other kind of arbitrary Byzantine behaviour, were 
+channels, or any other kind of arbitrary Byzantine behavior, were 
 also proposed by Lamport in \cite{lamport2019byzantine,lamport1983weak}. The solution was a synchronous 
 mechanism that used a set of leaders to reach consensus. Multiple practical implementations 
 and optimizations to this solution have been proposed in the literature. 
@@ -305,7 +305,7 @@ permissioned counterparts. Nevertheless, participation is free, and the
 governance is not centralized, but rather distributed and public. 
 The identity of the participants is secured or semi-secure as it often relies on
 pseudonymity for protecting the nodes' identity, while enabling full transparency 
-in regards to the rest of the network content and operation \cite{xiao2019distributed}.
+in regard to the rest of the network's content and operation \cite{xiao2019distributed}.
 The goal of permissionless consensus, as generally for any consensus protocol, is to reach
 agreement on a single value, or a set of values. However, due to the nature of the
 protocols, the values that are agreed upon end up establishing the serialization of the
@@ -337,7 +337,7 @@ and are replicated with some variations in the other permissionless networks \ci
 For example, there are some networks that do not have a proof-of-work mechanism,
 but rather a proof-of-stake, or a proof-of-space, or a proof-of-burn mechanism, etc.
 when it comes to the generation of the block and its existential and later verifiable proof.
-All of the other pillars are generally the same \cite{survey-dist-consensus}.
+All the other pillars are generally the same \cite{survey-dist-consensus}.
 The next sections will try to give a more detailed overview of these 
 block generation proof units.
 
@@ -345,16 +345,36 @@ block generation proof units.
 
 \subsection{The block generation}
 
+\begin{algorithm}
+  \caption[short]{BlockGeneration}\label{alg:BlockGeneration}
+  \begin{algorithmic}[1]
+    \Function {}{}
+      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
+      \Indent
+        \State $| \ Hash \ of \ the \ last \ Block$
+        \State $| \ Timestamp$
+        \State $| \ Other$
+      \EndIndent
+      
+      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
+      \While{$Hash(BlockHeader \ | \ nonce) \geq target$}
+      \State Increment $nonce$
+      \EndWhile
+      \State \Return new block
+    \EndFunction
+  \end{algorithmic}
+  \end{algorithm}
+  
 In the classical Nakamoto consensus protocol, the generation of a block, to be proposed
 for further network agreement, complies with the unit of computational work needed to
-create, or rather find, a verifiable proof of the effort spent on creating the block \cite{nakamoto2008bitcoin}. 
+create, or rather find, a verifiable proof of the effort spent on assembling the block \cite{nakamoto2008bitcoin}. 
 This essentially requires brute forcing the search for a cryptographic hash value for the
 aggregation of the block information with a nonce, such that this hash value satisfies
 a difficulty threshold (see Algorithm \ref{alg:BlockGeneration}), which gets adjusted dynamically over time, to maintain the network overall 
 requirement for the block generation interval \cite{survey-dist-consensus}.
 
 There are a couple of particularities that need to be mentioned. First, the block generation
-is of probablistic nature, as the nonce is a random value, and the hash function is a one-way function.
+is of probabilistic nature, as the nonce is a random value, and the hash function is a one-way function.
 Allied to this, more hashing power is not easily obtained, which allows for tackling Sybil attacks,
 despite the permissionless and pseudonymity nature of the network. Plus, the incentive mechanism
 also plays a role in this regard, by naturally incentivizing honest participation.
@@ -362,53 +382,35 @@ The block generation interval, forged by the adjustment of the difficulty
 threshold, is also of major importance because it reduces the fork probability and
 allows for the timely propagation of proposed blocks, guaranteeing consensus
 in the presence of an honest majority of the hashing power \cite{garay2015bitcoin}.
-This probabilitic finality shifts the 1/3 BFT threshold to a 1/2 threshold.
+This probabilistic finality shifts the 1/3 BFT threshold to a 1/2 threshold.
 
-
-\begin{algorithm}
-\caption[short]{BlockGeneration}\label{alg:BlockGeneration}
-\begin{algorithmic}[1]
-  \Function {}{}
-    \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
-    \Indent
-      \State $| \ Hash \ of \ the \ last \ Block$
-      \State $| \ Timestamp$
-      \State $| \ Other$
-    \EndIndent
-    
-    \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
-    \While{$Hash(BlockHeader \ | \ nonce) \geq target$}
-    \State Increment $nonce$
-    \EndWhile
-    \State \Return new block
-  \EndFunction
-\end{algorithmic}
-\end{algorithm}
-
-\subsection{Trade-offs and trillema}
+\subsection{Trade-offs and trilemma}
 
 Despite the harmony of all the aforementioned clever characteristics,
 the proof-of-work mechanism has some well known drawbacks. 
 First, the block generation is computationally expensive, and so the
 energy consumption associated with it is also high. This is caused by the
 dynamically adjusted difficulty threshold, which is a function of the block 
-generation interval. To maintain the 10 minutes interval, the hashing difficulty
-increases, and so too the hashing power and the energy needed for it. 
+generation interval. For example, in the Bitcoin network, to maintain the 10 
+minutes interval, the hashing difficulty
+increases with the increase of the hashing power, and so too the energy needed for it. 
 However, reducing the block generation interval would increase the
 probability of forks, which results in a more frequent waste of useful work,
 loosening the security of the network. Increasing the block size would also
 have the same security effect due to the increased propagation delay.
 
 As pointed in the literature, the design of these consensus mechanisms
-shall aim for a protocular choice between a set of properties that form a trillema (see Fig. \ref{fig:trillema}): 
-Security, Scalability, and Decentralization \cite{survey-dist-consensus}.
-Summarizing, ...
+shall aim for a protocolar choice between a set of properties that form a trilemma (see Fig. \ref{fig:trilemma}): 
+Security, Scalability, and Decentralization.
+Summarizing, relaxing the security requirements may allow for more scalability, both of which,
+consequently, have hands tied with decentralization. These trade-offs are of practical
+consideration when defining the network goals and use cases \cite{survey-dist-consensus}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\columnwidth]{trillema}
-  \caption{From \cite{survey-dist-consensus}, the blockchain consensus trillema.}
-  \label{fig:trillema}
+  \includegraphics[width=\columnwidth]{trilemma}
+  \caption{From \cite{survey-dist-consensus}, the blockchain consensus trilemma and its inner relations.}
+  \label{fig:trilemma}
 \end{figure}
 
 % Subsection text here.

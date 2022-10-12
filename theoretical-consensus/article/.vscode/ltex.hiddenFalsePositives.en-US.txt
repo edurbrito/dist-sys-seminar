@@ -1,0 +1,3 @@
+{"rule":"GENERAL_XX","sentence":"^\\QNevertheless, the problem of permissionless consensus can still be seen as a special case of the more general consensus and can still be formalized in the same way.\\E$"}
+{"rule":"EN_COMPOUNDS","sentence":"^\\QAs per multi-agent systems, interacting over computer networks, consensus is thought to be the result of a coordination effort such that those parties agree on some value at a given moment.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QL ong has been the time when consensus started to be defined as a fundamental problem of distributed systems \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
