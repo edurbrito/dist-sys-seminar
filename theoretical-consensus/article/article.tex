@@ -423,7 +423,7 @@ pseudo-random competition in which an entity in possession of a higher
 amount of a certain resource, either computational power, or stake, 
 or certain currency, or a higher amount of storage space, etc., guarantees
 a higher probability of leading the block generation and proposal, and
-consequently winning acceptance by the majority. This is the essence of
+consequently winning the acceptance by the majority. This is the essence of
 the Proof-of-Stake consensus protocol, as a derivative of the Proof-of-Work
 mechanism, where a stake is a traceable and verifiable amount of a certain
 unit, token or currency, that is owned by a certain entity that wishes to
@@ -436,8 +436,8 @@ however, this adds up to nothing, especially when compared to the already proved
 BFT solutions, if centralization is a functional requirement, 
 or unfair advantage is a potential trait. 
 These limitations, along with other security concerns, may push away the 
-participation of resourceless entities, and consequently, the network
-decentralization.
+participation of resourceless entities, and consequently, affect the network
+decentralization and security.
 
 \subsubsection{Chain-based and Committee-based protocols}
 
@@ -450,10 +450,10 @@ stake as part of the block generation and hashing proof (See Algorithm \ref{alg:
 These are commonly referred to as Chain-based \emph{PoS}, inheriting also the
 fault-tolerance properties of the Nakamoto consensus protocol.
 Committee-based \emph{PoS} protocols, on the other hand, are more complex,
-and they are based on the idea of a committee of entities that are 
+and based on the idea of a committee of entities that are 
 selected to lead the block generation and proposal. The committee is
 formed by a subset of the network entities, and the selection is done
-based on their stake. Usually, the selection takes a form of a random
+based on their stake. Usually, the selection takes the form of a random
 sequence of stake holders, where the probability of being selected
 for every spot is proportional to the stake. That sequence is then 
 consciously timed to orderly pace the block generation and proposal, 
@@ -508,7 +508,69 @@ which are selected by the network, with a voting mechanism based on the
 delegation of stake. The consensus is then achieved using a typical 
 PBFT protocol, with the usual 1/3 byzantine tolerance.
 
-\subsection{}
+\subsection{Proof-of-Something Else}
+
+Idealized and inspired by Proof-of-Stake, extending or adapting Proof-of-Work
+became a popular trend in the blockchain community. The main idea is to
+replace the computational power with some other resource, that is
+more scarce, or more valuable, or more verifiable, or more traceable, etc.,
+or to combine multiple resources, or even to add extra requirements to 
+pure Proof-of-Work. From Proof-of-Meaningful-Work, to Proof-of-Work-Time, there
+are countless and exotic variations of these mechanisms, and the list is growing \cite{token-economy-gitbook}.
+
+\subsubsection{Proof-of-Space} established itself as a popular alternative among those.
+The goal is to replace computational power with storage space,
+and if possible give it a meaningful usage. Proof-of-Retrievability is
+a cited example of this type of protocols, where the storage space is
+used to store a large amount of relevant or public data, and the retrieval of that data
+is used as a proof of the storage usage \cite{juels2007pors}. Despite the reciclability 
+of the storage space, as a resource that could be a good alternative
+to computational power, this algorithm has its own fatal flaws, depending
+mostly on a central dealer for randomness as well as for consensus fairness.
+Other reported Proof-of-Space variants may not even attempt to store/retrieve any meaningful data.
+
+\subsubsection{Proof-of-Authority} another well known derivative,
+which, in effect, is a form of Proof-of-Stake, where the stake is the 
+identity of the entity, that has been verified, scrutinized and
+approved by the network, giving it the right to participate in the
+closed consensus group. The consensus protocol, if not a BFT protocol, 
+can follow the style of a Proof-of-Work protocol, depending on the 
+requirements of the network - a choice that may shape the fault tolerance,
+decentralization, security and performance of the network \cite{survey-dist-consensus}.
+
+\subsubsection{Proof-of-Elapsed-Time} is another alternative to Proof-of-Work,
+especially targetting the intensive mining issue, that has been proposed 
+by Intel. The idea is to simulate the mining process by using a
+randomized time delay, which is proportional to the amount of work
+that would be required to mine the block. The time delay is then used to pace the
+block generation and proposal, and the block acceptance can be performed
+using a BFT protocol \cite{olson2018sawtooth}. This solution, however,
+is not a viable alternative to other, permissioned and permissionless, approaches, 
+by holding strong and centralized hardware requirements, 
+as the computations require a trusted execution environment
+(TEE) to establish the trust among the participants. Some efforts have been made
+to combine the TEE feature with Proof-of-Stake, in order to achieve a
+more decentralized and secure protocol, but the 
+same hardware requirements are still a major issue.
+
+\subsection{Other approaches}
+
+\subsubsection{The XRP Ledger Consensus Protocol} powers the XRP Ledger in a
+low-latency, high throughput, and  BFT fashion. The network itself operates somewhat
+diferently from the other blockchain references, and treats transactions as atomic units of 
+the ledger. These transactions are collected by the nodes and relayed to the
+nodes' UNL (Unique Node List), which is a list of peers that are trusted by that current
+entity. At every epoch, multiple rounds are needed to filter transactions and vote 
+on the next state of the ledger. This voting happens at the 
+UNLs' level, which are expected to be overlapped by a certain percentage,
+in order to achieve the artificial vote threshold for globally accepting the transactions.
+That threshold defines the fault tolerance of the protocol, and is set to 80\%, which 
+bounds this protocol to a 1/5 BFT allowance \cite{schwartz2014ripple, chase2018analysis}. 
+Despite that limitation, when compared to other BFT protocols, this protocol seeks to trade 
+fault tolerance for performance, by having lower connectivity and less message exchanges. 
+However, it is still expected high synchrony within the UNLs. Given these characteristics, the protocol
+is expected to be more suitable for permissioned networks, and, in terms of network size,
+is seen as not as scalable and decentralized as the permissionless ones \cite{survey-dist-consensus}.
 
 % Subsection text here.
 
