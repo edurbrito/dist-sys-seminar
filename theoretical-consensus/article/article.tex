@@ -454,7 +454,7 @@ and based on the idea of a committee of entities that are
 selected to lead the block generation and proposal. The committee is
 formed by a subset of the network entities, and the selection is done
 based on their stake. Usually, the selection takes the form of a random
-sequence of stake holders, where the probability of being selected
+sequence of stakeholders, where the probability of being selected
 for every spot is proportional to the stake. That sequence is then 
 consciously timed to orderly pace the block generation and proposal, 
 by the current slot leader. Examples of this type of mechanisms are
@@ -463,7 +463,7 @@ or \emph{Snow White} \cite{daian2019snow}. The longest chain rule is
 still applied, with probabilistic finality, and the 1/2 threshold is
 still required or tolerated for the network to reach consensus. Nonetheless,
 Committee-based \emph{PoS} protocols may not pair well with decentralization and 
-increase in the committee size, which detereorates the performance of the
+increase in the committee size, which deteriorates the performance of the
 protocol. Several improvements have been proposed to tackle not only this
 issue, but also the security of the committees which, smaller, could be more
 vulnerable to targeted attacks \cite{david2018ouroboros}.
@@ -498,7 +498,7 @@ are responsible for the block acceptance. The block proposal mechanism
 can be of any kind, for example, Chain-based \emph{PoS}, or Committee-based \emph{PoS},
 or even pure Proof-of-Work. The block acceptance layer then allows
 for a deterministic acceptance of the blocks, by having a sort of permissioned
-BFT consensus protocol, with the trivial 1/3 byzantine tolerance. The most well known examples
+BFT consensus protocol, with the trivial 1/3 Byzantine tolerance. The most well known examples
 and variations are the Tendermint \cite{buchman2016tendermint} and the new Ethereum Casper 
 \cite{buterin2017casper} protocols.
 
@@ -506,7 +506,7 @@ Delegated Proof-of-Stake (DPoS) is a variation of the BFT-based protocols,
 where the consensus group is formed by a subset of the network entities,
 which are selected by the network, with a voting mechanism based on the
 delegation of stake. The consensus is then achieved using a typical 
-PBFT protocol, with the usual 1/3 byzantine tolerance.
+PBFT protocol, with the usual 1/3 Byzantine tolerance.
 
 \subsection{Proof-of-Something Else}
 
@@ -539,7 +539,7 @@ requirements of the network - a choice that may shape the fault tolerance,
 decentralization, security and performance of the network \cite{survey-dist-consensus}.
 
 \subsubsection{Proof-of-Elapsed-Time} is another alternative to Proof-of-Work,
-especially targetting the intensive mining issue, that has been proposed 
+especially targeting the intensive mining issue, that has been proposed 
 by Intel. The idea is to simulate the mining process by using a
 randomized time delay, which is proportional to the amount of work
 that would be required to mine the block. The time delay is then used to pace the
@@ -557,7 +557,7 @@ same hardware requirements are still a major issue.
 
 \subsubsection{The XRP Ledger Consensus Protocol} powers the XRP Ledger in a
 low-latency, high throughput, and  BFT fashion. The network itself operates somewhat
-diferently from the other blockchain references, and treats transactions as atomic units of 
+differently from the other blockchain references, and treats transactions as atomic units of 
 the ledger. These transactions are collected by the nodes and relayed to the
 nodes' UNL (Unique Node List), which is a list of peers that are trusted by that current
 entity. At every epoch, multiple rounds are needed to filter transactions and vote 
@@ -571,6 +571,22 @@ fault tolerance for performance, by having lower connectivity and less message e
 However, it is still expected high synchrony within the UNLs. Given these characteristics, the protocol
 is expected to be more suitable for permissioned networks, and, in terms of network size,
 is seen as not as scalable and decentralized as the permissionless ones \cite{survey-dist-consensus}.
+
+\subsubsection{DAG structures} may diverge from the previous approaches with an envisioned 
+non-linear structure for the result of the consensus attestations. The choice resides in 
+directed acyclic graphs that should expand and physically connect, further in time, the new
+data appended to the network. The data, which is typically held in the vertices of the graph, 
+can have more or less granularity, either by storing blocks of transactions, or raw transactions directly.
+This design decision may pose new potential challenges, related to the verification and finalization of
+the consensus protocol. Currently, those two approaches are then distinguished as \emph{blockDAG} and 
+\emph{txDAG}. The block-based DAG approach diverges from the traditional blockchain structure by flexibly 
+connecting every new block to multiple previous blocks. The rest of the protocol may work in the same way 
+as the traditional Proof-of-Work, however, this new feature yields new security considerations. These protocols
+are theoretically designed for very high throughput in permissionless environments, but the security trade-offs
+are still not well-known.
+In a transaction-based DAG, every vertex holds one transaction, that is connected to previous vertices. 
+All the sibling vertices shall then represent disjoint transactions to successfully deal with history and conflict
+resolutions. 
 
 % Subsection text here.
 
