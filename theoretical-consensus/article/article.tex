@@ -159,7 +159,7 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
-Disclaimer: This paper is a work in progress. It is not a final version and it is not intended to be submited yet to the Distributed Systems Seminar. The content of this paper is subject to change.
+Disclaimer: This paper is a work in progress. It is not a final version and it is not intended to be submitted yet to the Distributed Systems Seminar. The content of this paper is subject to change.
 \end{abstract}
 
 % Note that keywords are not normally used for peer review papers.
@@ -579,14 +579,28 @@ data appended to the network. The data, which is typically held in the vertices 
 can have more or less granularity, either by storing blocks of transactions, or raw transactions directly.
 This design decision may pose new potential challenges, related to the verification and finalization of
 the consensus protocol. Currently, those two approaches are then distinguished as \emph{blockDAG} and 
-\emph{txDAG}. The block-based DAG approach diverges from the traditional blockchain structure by flexibly 
+\emph{txDAG} \cite{survey-dist-consensus}. 
+The block-based DAG approach diverges from the traditional blockchain structure by flexibly 
 connecting every new block to multiple previous blocks. The rest of the protocol may work in the same way 
 as the traditional Proof-of-Work, however, this new feature yields new security considerations. These protocols
 are theoretically designed for very high throughput in permissionless environments, but the security trade-offs
-are still not well-known.
+are still not well-known \cite{sompolinsky2018phantom}.
 In a transaction-based DAG, every vertex holds one transaction, that is connected to previous vertices. 
 All the sibling vertices shall then represent disjoint transactions to successfully deal with history and conflict
-resolutions. 
+resolutions. Two well-known examples of this approach are IOTA Tangle \cite{popov2018tangle} 
+and Nano \cite{lemahieu2018nano}.
+The former is of particular interest, as it is especially designed for IoT applications, low-powered devices, and
+micro-transactions. The protocol states that every new vertex needs to be connected to two previous vertices, 
+therefore approving the parent transactions, as an incentive mechanism for honest behavior \cite{survey-dist-consensus}. 
+The users are the ones to submit transactions, generating and attaching a PoW proof to it and 
+so guaranteeing probabilistic finality with 1/2 fault tolerance. This solution may indeed pair well with 
+decentralization and scalability, however, there are known security issues related to the
+easiness of growing malicious parallel branches with little computational effort, and those issues have been 
+addressed by the introduction of an undesirable centralized solution. 
+Other interesting and worth mentioning protocols are the ones that combine the DAG structure with the BFT consensus, 
+such as the Snowflake-Avalanche protocol \cite{rocket2018snowflake}.
+
+
 
 % Subsection text here.
 
