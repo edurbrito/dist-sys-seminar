@@ -264,7 +264,7 @@ but also about their order - naturally forming the underlying structure of what 
 "Proof-of-work is essentially one-CPU-one-vote" and this is the novelty 
 introduced by Bitcoin \cite{pass2016hybrid,pass2016hybrid2}. The focus shifted 
 for decentralized systems and after proof-of-work many other consensus mechanisms have been proposed, 
-based on different consensus units, like proof-of-stake, proof-of-space, proof-of-burn, etc. The chaotic 
+based on different consensus units, like proof-of-stake, proof-of-space, proof-of-authority, etc. The chaotic 
 diversity of new consensus protocols gave also room for endless reviews, overviews and comparisons \cite{survey-dist-consensus, BAMAKAN2020113385, 8400278, 8629877, 9376868, BOURAGA2021114384}. 
 The authors of these surveys often put multiple dimensions into comparison, like fault tolerance, scalability, or energy consumption,
 and, among those, some focused their efforts on mechanisms that may work in resource-constrained networks \cite{9104713, 8661654, 8168250, SALIMITARI2020100212}. 
@@ -293,7 +293,7 @@ These requirements include dealing with today's sparse networks of anonymously a
 participating devices, without interrupting consensus and while battling Sybil attacks \cite{survey-dist-consensus}.
 Fundamentally, the permissionless consensus problem is the need for a consensus protocol that
 can be run in a distributed and decentralized environment, where the participants are unknown and untrusted,
-and where the network is bigger, sparse and unpredictably unreliable.
+and where the network is bigger, sparser and unpredictably less reliable.
 
 \subsection{Allowances and goals}
 
@@ -335,7 +335,7 @@ in this very context of permissionless consensus.
 These building blocks form the basis of the inner functioning of Bitcoin itself \cite{nakamoto2008bitcoin},
 and are replicated with some variations in the other permissionless networks \cite{buterin2014next}.
 For example, there are some networks that do not have a proof-of-work mechanism,
-but rather a proof-of-stake, or a proof-of-space, or a proof-of-burn mechanism, etc.
+but rather a proof-of-stake, or a proof-of-space, or a proof-of-authority mechanism, etc.
 when it comes to the generation of the block and its existential and later verifiable proof.
 All the other pillars are generally the same \cite{survey-dist-consensus}.
 The next sections will try to give a more detailed overview of these 
@@ -393,7 +393,7 @@ energy consumption associated with it is also high. This is caused by the
 dynamically adjusted difficulty threshold, which is a function of the block 
 generation interval. For example, in the Bitcoin network, to maintain the 10 
 minutes interval, the hashing difficulty
-increases with the increase of the hashing power, and so too the energy needed for it. 
+increases with the increase of the hashing power, and so too the energy needed for computing that proof. 
 However, reducing the block generation interval would increase the
 probability of forks, which results in a more frequent waste of useful work,
 loosening the security of the network. Increasing the block size would also
@@ -443,7 +443,7 @@ decentralization and security.
 
 Due to the self-contained nature of this type of protocols, where the
 attestation of the stake is done inside the network, multiple classes
-of Proof-of-Stake can be distinguished, by the way the meaningfulness of
+of Proof-of-Stake can be distinguished by the way the meaningfulness of
 the stake is defined and employed. For example, there are the simplest forms of \emph{PoS} that inherit most
 of the characteristics of the Proof-of-Work mechanism, but with the
 stake as part of the block generation and hashing proof (See Algorithm \ref{alg:PoSBlockGeneration}).
@@ -515,8 +515,12 @@ became a popular trend in the blockchain community. The main idea is to
 replace the computational power with some other resource, that is
 more scarce, or more valuable, or more verifiable, or more traceable, etc.,
 or to combine multiple resources, or even to add extra requirements to 
-pure Proof-of-Work. From Proof-of-Meaningful-Work, to Proof-of-Work-Time, there
+pure Proof-of-Work. From Proof-of-Meaningful-Work, or Proof-of-Luck, 
+to Proof-of-Work-Time, going through Proof-of-Humanity, or Proof-of-Personhood, there
 are countless and exotic variations of these mechanisms, and the list is growing \cite{token-economy-gitbook}.
+Not that every one of them has a big potential for entirely solving the permissionless consensus problem,
+but each one of them may tackle different use cases where consensus needs to be reached, 
+and where different resources are available to guarantee and make the agreement happen \cite{BOURAGA2021114384}.
 
 \subsubsection{Proof-of-Space} established itself as a popular alternative among those.
 The goal is to replace computational power with storage space,
@@ -529,7 +533,7 @@ to computational power, this algorithm has its own fatal flaws, depending
 mostly on a central dealer for randomness as well as for consensus fairness.
 Other reported Proof-of-Space variants may not even attempt to store/retrieve any meaningful data.
 
-\subsubsection{Proof-of-Authority} another well known derivative,
+\subsubsection{Proof-of-Authority} is another well known derivative,
 which, in effect, is a form of Proof-of-Stake, where the stake is the 
 identity of the entity, that has been verified, scrutinized and
 approved by the network, giving it the right to participate in the
