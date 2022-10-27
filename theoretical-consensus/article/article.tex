@@ -290,7 +290,7 @@ Summing up, the need for permissionless consensus is then justified by the fact 
 permissioned protocols are not compatible with the requirements of the new generation of
 distributed systems, especially in the context of blockchain networks. 
 These requirements include dealing with today's sparse networks of anonymously and dynamically
-participating devices, without interrupting consensus and while battling Sybil attacks \cite{survey-dist-consensus}.
+participating devices, without interrupting consensus and while battling Sybil attacks \cite{8629877, survey-dist-consensus}.
 Fundamentally, the permissionless consensus problem is the need for a consensus protocol that
 can be run in a distributed and decentralized environment, where the participants are unknown and untrusted,
 and where the network is bigger, sparser and unpredictably less reliable.
@@ -310,9 +310,9 @@ The goal of permissionless consensus, as generally for any consensus protocol, i
 agreement on a single value, or a set of values. However, due to the nature of the
 protocols, the values that are agreed upon end up establishing the serialization of the
 transactions that are executed in the network, and so establishing time consciousness and 
-total order of the events.
+total order of the events \cite{8629877}.
 
-As pointed out by \cite{xiao2019distributed} and then referenced by \cite{survey-dist-consensus}, 
+As pointed out by \cite{xiao2019distributed, 8629877} and then referenced by \cite{survey-dist-consensus}, 
 similarly to the permissioned counterparts, permissionless consensus protocols 
 aim at achieving the following properties: Termination, Agreement, Validity, 
 and Integrity. Without going into a lot of details, of these properties, 
@@ -371,7 +371,7 @@ create, or rather find, a verifiable proof of the effort spent on assembling the
 This essentially requires brute forcing the search for a cryptographic hash value for the
 aggregation of the block information with a nonce, such that this hash value satisfies
 a difficulty threshold (See Algorithm \ref{alg:BlockGeneration}), which gets adjusted dynamically over time, to maintain the network overall 
-requirement for the block generation interval \cite{survey-dist-consensus}.
+requirement for the block generation interval \cite{8629877, survey-dist-consensus}.
 
 There are a couple of particularities that need to be mentioned. First, the block generation
 is of probabilistic nature, as the nonce is a random value, and the hash function is a one-way function.
@@ -397,7 +397,7 @@ increases with the increase of the hashing power, and so too the energy needed f
 However, reducing the block generation interval would increase the
 probability of forks, which results in a more frequent waste of useful work,
 loosening the security of the network. Increasing the block size would also
-have the same security effect due to the increased propagation delay.
+have the same security effect due to the increased propagation delay \cite{8629877}.
 
 As pointed in the literature, the design of these consensus mechanisms
 shall aim for a protocolar choice between a set of properties that form a trilemma (see Fig. \ref{fig:trilemma}): 
