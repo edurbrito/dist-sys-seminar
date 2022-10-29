@@ -53,6 +53,7 @@
 
 \usepackage[pdftex]{graphicx}
 \graphicspath{ {./images/} }
+\usepackage{caption}
 
 %\usepackage{amsmath}
 
@@ -265,7 +266,7 @@ but also about their order - naturally forming the underlying structure of what 
 introduced by Bitcoin \cite{pass2016hybrid,pass2016hybrid2}. The focus shifted 
 for decentralized systems and after proof-of-work many other consensus mechanisms have been proposed, 
 based on different consensus units, like proof-of-stake, proof-of-space, proof-of-authority, etc. The chaotic 
-diversity of new consensus protocols gave also room for endless reviews, overviews and comparisons \cite{survey-dist-consensus, BAMAKAN2020113385, 8400278, 8629877, 9376868, BOURAGA2021114384}. 
+diversity of new consensus protocols gave also room for endless reviews, overviews and comparisons \cite{survey-dist-consensus, BAMAKAN2020113385, 8400278, natoli2019deconstructing, 8629877, 9376868, BOURAGA2021114384}. 
 The authors of these surveys often put multiple dimensions into comparison, like fault tolerance, scalability, or energy consumption,
 and, among those, some focused their efforts on mechanisms that may work in resource-constrained networks \cite{9104713, 8661654, 8168250, SALIMITARI2020100212}. 
 This paper will try to identify the common conclusions from these comparisons, while looking into the state-of-the-art and novel approaches for running permissionless
@@ -381,7 +382,7 @@ also plays a role in this regard, by naturally incentivizing honest participatio
 The block generation interval, forged by the adjustment of the difficulty
 threshold, is also of major importance because it reduces the fork probability and
 allows for the timely propagation of proposed blocks, guaranteeing consensus
-in the presence of an honest majority of the hashing power \cite{garay2015bitcoin}.
+in the presence of an honest majority of the hashing power \cite{garay2015bitcoin, natoli2019deconstructing}.
 This probabilistic finality shifts the 1/3 BFT threshold to a 1/2 threshold.
 
 \subsection{Trade-offs and trilemma}
@@ -397,10 +398,10 @@ increases with the increase of the hashing power, and so too the energy needed f
 However, reducing the block generation interval would increase the
 probability of forks, which results in a more frequent waste of useful work,
 loosening the security of the network. Increasing the block size would also
-have the same security effect due to the increased propagation delay \cite{8629877}.
+have the same security effect due to the increased propagation delay \cite{8629877, natoli2019deconstructing}.
 
 As pointed in the literature, the design of these consensus mechanisms
-shall aim for a protocolar choice between a set of properties that form a trilemma (see Fig. \ref{fig:trilemma}): 
+shall aim for a protocolar choice between a set of properties that form a trilemma (See Fig. \ref{fig:trilemma}): 
 Security, Scalability, and Decentralization.
 Summarizing, relaxing the security requirements may allow for more scalability, both of which,
 consequently, have hands tied with decentralization. These trade-offs are of practical
@@ -517,10 +518,10 @@ more scarce, or more valuable, or more verifiable, or more traceable, etc.,
 or to combine multiple resources, or even to add extra requirements to 
 pure Proof-of-Work. From Proof-of-Meaningful-Work, or Proof-of-Luck, 
 to Proof-of-Work-Time, going through Proof-of-Humanity, or Proof-of-Personhood, there
-are countless and exotic variations of these mechanisms, and the list is growing \cite{token-economy-gitbook}.
+are countless and exotic variations of these mechanisms, and the list is growing \cite{token-economy-gitbook, 9376868}.
 Not that every one of them has a big potential for entirely solving the permissionless consensus problem,
 but each one of them may tackle different use cases where consensus needs to be reached, 
-and where different resources are available to guarantee and make the agreement happen \cite{BOURAGA2021114384}.
+and where different resources are available to make the agreement happen \cite{BOURAGA2021114384, 9376868}.
 
 \subsubsection{Proof-of-Space} established itself as a popular alternative among those.
 The goal is to replace computational power with storage space,
@@ -542,7 +543,7 @@ can follow the style of a Proof-of-Work protocol, depending on the
 requirements of the network - a choice that may shape the fault tolerance,
 decentralization, security and performance of the network \cite{survey-dist-consensus}.
 
-\subsubsection{Proof-of-Elapsed-Time} is another alternative to Proof-of-Work,
+\subsubsection{Proof-of-Elapsed-Time} is another alternative to \emph{PoW},
 especially targeting the intensive mining issue, that has been proposed 
 by Intel. The idea is to simulate the mining process by using a
 randomized time delay, which is proportional to the amount of work
@@ -556,6 +557,26 @@ as the computations require a trusted execution environment
 to combine the TEE feature with Proof-of-Stake, in order to achieve a
 more decentralized and secure protocol, but the 
 same hardware requirements are still a major issue.
+
+\subsubsection{Proof-of-Location} may be an alternative for envisioning a future where the
+consensus is achieved by taking advantage of the dynamism and easiness of movement, placement and 
+tracking of smaller and more location-versatile devices, such as mobile phones, IoT devices, etc.
+The idea behind this approach is to use the location and the movement of the devices 
+as a proof for the consensus. It relies on the location validation by close proximity, 
+for example, using low-range communication channels, either by proving the location
+of the device at a certain point in time, or by proving their proximity to other devices.
+Incentive mechanisms may play an important role to prevent location spoofing, collusion, etc. \cite{natoli2019deconstructing}.
+This protocol is getting increased attention, especially in the context of IoT, 
+with the provision of decentralized, permissionless and autonomous networks of 
+low-powered devices that can be used for providing these location verification services \cite{9376868}.
+
+\begin{figure*}[h]
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=\textwidth]{proof-alternative-consensus}
+  \caption{From \cite{9376868}, an extensive list of pure proof alternative consensus mechanisms.}
+  \label{fig:proof-alternative-consensus}
+\end{figure*}
 
 \subsection{Other approaches}
 
@@ -596,7 +617,7 @@ and Nano \cite{lemahieu2018nano}.
 The former is of particular interest, as it is especially designed for IoT applications, low-powered devices, and
 micro-transactions. The protocol states that every new vertex needs to be connected to two previous vertices, 
 therefore approving the parent transactions, as an incentive mechanism for honest behavior \cite{survey-dist-consensus}. 
-The users are the ones to submit transactions, generating and attaching a PoW proof to it and 
+The users are the ones to submit transactions, generating and attaching a \emph{PoW} proof to it and 
 so guaranteeing probabilistic finality with 1/2 fault tolerance. This solution may indeed pair well with 
 decentralization and scalability, however, there are known security issues related to the
 easiness of growing malicious parallel branches with little computational effort, and those issues have been 
