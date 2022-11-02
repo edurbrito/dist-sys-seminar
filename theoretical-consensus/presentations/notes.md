@@ -77,6 +77,8 @@ which, consequently, have hands tied with decentralization.
 Taking proof-of-work as a reference
 I followed with my research
 And ended up reviewing other block finalization schemas
+    
+
 Like Proof-of-Stake, Proof-of-Space, Proof-of-Elapsed-Time, or Proof-of-Location
 And the conclusion is that
 All of them present some trade-offs and not all of them may attempt to entirely
