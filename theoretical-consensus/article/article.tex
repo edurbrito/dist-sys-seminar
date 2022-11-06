@@ -268,7 +268,7 @@ for decentralized systems and after proof-of-work many other consensus mechanism
 based on different consensus units, like proof-of-stake, proof-of-space, proof-of-authority, etc. The chaotic 
 diversity of new consensus protocols gave also room for endless reviews, overviews and comparisons \cite{survey-dist-consensus, BAMAKAN2020113385, 8400278, natoli2019deconstructing, 8629877, 9376868, BOURAGA2021114384}. 
 The authors of these surveys often put multiple dimensions into comparison, like fault tolerance, scalability, or energy consumption,
-and, among those, some focused their efforts on mechanisms that may work in resource-constrained networks \cite{9104713, 8661654, 8168250, SALIMITARI2020100212}. 
+and, among those, some focused their efforts on mechanisms that may work in resource-constrained networks \cite{9104713, 8168250, queralta2021blockchain, SALIMITARI2020100212}. 
 This paper will try to identify the common conclusions from these comparisons, while looking into the state-of-the-art and novel approaches for running permissionless
 consensus protocols in mobile and edge devices.
 
@@ -625,7 +625,117 @@ addressed by the introduction of an undesirable centralized solution.
 Other interesting and worth mentioning protocols are the ones that combine the DAG structure with the BFT consensus, 
 such as the Snowflake-Avalanche protocol \cite{rocket2018snowflake}.
 
+\section{Resource-Constrained Networks}
 
+\subsection{Characteristics}
+
+Resource-constrained networks are a class of networks that are characterized by the
+limited access to resources, such as energy, bandwidth, storage, etc.
+These networks are typically seen in IoT applications, where the devices are
+usually low-powered, with limited computational resources, but are expected to 
+collectively operate with high availability, at least the network as a whole, 
+preferably without the need for frequent maintenance.
+These networks are also expected to be dynamic, with frequent changes in the network
+topology, by the unpredictable addition and removal of nodes. 
+The nodes are also expected to be heterogeneous, with different capabilities, and may be
+connected to the network through different communication channels. 
+Mobility may also be a feature, as the nodes may spatially move around, 
+and may directly pair with different nodes at different moments.
+The nodes may also be individually unreliable, untrusted, uncoordinated, unmanageable, may fail at any time, 
+and may be disconnected from the rest of the network.
+
+Nowadays, the typical resource-constrained networks follow a centralized architecture
+with a client-server model, where the network is controlled by a single entity,
+which is responsible for the management of the nodes, including authentication,
+authorization, and communication. This single-point-of-failure is also a major
+scalability bottleneck, and a maintenance burden, as the network grows in number of devices \cite{SALIMITARI2020100212}.
+
+\subsection{Challenges}
+
+Having in mind these characteristics of resource-constrained networks,
+and the drawbacks of the centralized architecture, it may be postulated the 
+need for a decentralized or permissionless shift that addresses some the most important challenges
+of these deployments \cite{SALIMITARI2020100212}:
+
+\begin{itemize}
+  \item \emph{Scalability}:  in terms of the number of available devices - decentralizing may allow
+  for better, faster and less costly maintenance of the network, assuring more availability and reliability
+  and cutting the single-entity dependency;
+  \item \emph{Security}: in terms of the network as a whole - removing the single-point-of-failure 
+  may reduce the attack surface, and may also allow or require more flexible and dynamic security policies;
+  \item \emph{Privacy}: in terms of the network data exchange features - decentralizing may allow for
+  a user-centric approach, where the users are in control of the data that is shared with the network; 
+\end{itemize}
+
+Permissionless consensus is a promising solution for these challenges, as an enabler for
+decentralized environments. The use cases for these networks are diverse. Nevertheless,
+as long as consensus is achieved, the network as a whole can be abstractly seen and used
+as a trusted entity that runs as a trustless decentralized service. Applications may then
+be built on top of it, and the network may be used as a platform for other services \cite{queralta2021blockchain}.
+However, there are some key aspects that need to be addressed
+in order to make this approach viable for resource-constrained networks, as we saw in the previous section:
+
+\begin{itemize}
+  \item \emph{Resource consumption}: the consensus protocols should be resource-efficient, for example, in terms of energy, bandwidth, or storage, 
+  as the nodes are expected to be low-powered devices, with limited computational, communication, and storage resources;
+  \item \emph{Heterogeneity}: the consensus protocols should account for different device characteristics, 
+  as the nodes are expected to be heterogeneous in terms of their capabilities;
+  \item \emph{Fault tolerance}: the consensus protocols should be fault-tolerant, as the nodes are expected to be unreliable, 
+  untrusted, uncoordinated, or unmanageable;
+  \item \emph{Openness}: the consensus protocols should be open and trustless, as the nodes are expected to be 
+  dynamically added and removed from the network;
+  \item \emph{Security}: the consensus protocols should be resistant to a multitude of new attacks,
+   especially if it turns out to be easy for malicious entities to overcome resource constraints;
+\end{itemize}
+
+The overall theoretical properties of the consensus protocols still need to be taken into account,
+as the goal is to have a proved functional mechanism that achieves Termination, Agreement, Validity, and Integrity,
+while playing with the trade-offs imposed by the trilemma (See Fig. \ref{fig:trilemma}) \cite{survey-dist-consensus}.
+
+\subsection{Related Work}
+
+There have been several attempts to address the challenges of resource-constrained networks,
+and to understand the limitations of the existing consensus protocols in this context.
+A common conclusion is that the existing protocols are not suitable for these networks,
+due either to the high resource consumption, or to the centralization of various aspects of the protocol,
+or also to high communication overheads, that are translated to high latency and low throughput \cite{SALIMITARI2020100212},
+making these protocols unsuitable for resource-constrained applications. Other concerns are the
+security issues, as some attempts to overcome the resource constraints may lead to new vulnerabilities,
+which may be exploited by malicious and more powerful entities.
+
+A thoroughly mentioned approach is the IOTA Tangle protocol \cite{popov2018tangle}, which
+presents a friendly design for resource-constrained networks, infinitely scalable, and with low latency.
+However, there are still known security and centralization limitations, as presented in the sections before.
+Another concept that has been explored is sharding \cite{SALIMITARI2020100212, queralta2021blockchain}, which is a
+technique that allows for the partitioning of the network into smaller sub-networks,
+that are then managed by different entities, validating transactions in parallel. 
+This approach may be used to overcome the scalability bottleneck,
+but it may also introduce new issues that are still to be researched.
+Frankly, there are indeed some well established protocols that, all in all, can be adapted to networks with
+resource-constrained devices that are not necessarily short on the resources needed to run the protocols.
+For example, a lot of \emph{PoS} related protocols may be adapted to resource-constrained networks, where 
+the stake is the only considerable resource that the nodes need. There are a multitude of projects that are
+currently exploring this approach, for example, with the Ethereum transition to \emph{PoS} \cite{buterin2017casper}.
+However, this does not address the hipothesis of taking advantage of the very nature of these limited environments, 
+as simply choosing a BFT protocol that is resource-efficient
+may also put us far apart from the ultimate decentralization and scalability goal of 
+other and fairer means of consensus participation.
+An interesting idea is based on the use of \emph{Proof of Location} for 
+coordinating the consensus. The easiness of movement and targetted location deployment
+of a lot of these low-power devices may be used to achieve a decentralized consensus
+protocol, where elected nodes may be somehow chosen based on their location, 
+either by proximity, or by some other withnessing mechanism. Variations and 
+extensions of this idea, with different and wide use cases, have been seen in
+\cite{foam2018location, xyo2018location}
+
+\section{Conclusion}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget aliquam aliquam.
+
+\section{Acknowledgements}
+
+This work was supported by the 2022 XRP Ledger Trust Scholarship Program for Master's Students
+at the University of Tartu.
 
 % Subsection text here.
 

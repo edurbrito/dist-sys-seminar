@@ -24,9 +24,11 @@ the first very basic syncronous solutions for the consensus problem
 They noticed that some interesting challenges were not being considered
 and so they then defined one of the most famous problems in distributed systems
 The byzantine generals problem
-Along with it, they also proposed the first protocols that were already considering
+Along with it, they also proposed the first protocols 
+that were already considering
 some types of faulty or byzantine behaviour
-After that, some practical implementations and asynchronous mechanisms started to appear
+After that, some practical implementations 
+and asynchronous mechanisms started to appear
 But at this point, there were some very strong assumtions in the table 
 that would not model interesting challenges of todays internet
 These old mechanisms were mostly based on the knowledge or the role definition
