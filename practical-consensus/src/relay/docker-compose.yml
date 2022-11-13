@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  gundb1:
+    image: in-browser-pow/gundb:v1
+    ports:
+      - 8765:8765
+    environment:
+      - PEERS=http://gundb2:8765/gun,http://gundb3:8765/gun
+  gundb2:
+    image: in-browser-pow/gundb:v1
+    ports:
+      - 8766:8765
+    environment:
+      - PEERS=http://gundb1:8765/gun,http://gundb3:8765/gun
+  gundb3:
+    image: in-browser-pow/gundb:v1
+    ports:
+      - 8767:8765
+    environment:
+      - PEERS=http://gundb1:8765/gun,http://gundb2:8765/gun

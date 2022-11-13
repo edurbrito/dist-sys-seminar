@@ -1,0 +1,31 @@
+{
+  "name": "practical-consensus",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt",
+    "dev:host": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt --hostname '192.168.103.47' --port 8000",
+    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt build",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt start",
+    "generate": "export SET NODE_OPTIONS=--openssl-legacy-provider && nuxt generate"
+  },
+  "dependencies": {
+    "core-js": "^3.25.3",
+    "crypto-js": "^4.1.1",
+    "gun": "^0.2020.1238",
+    "nuxt": "^2.15.8",
+    "uuid": "^9.0.0",
+    "vue": "^2.7.10",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.15.8",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/tailwindcss": "^5.3.3",
+    "@types/crypto-js": "^4.1.1",
+    "@types/uuid": "^8.3.4",
+    "postcss": "^8.4.17",
+    "worker-loader": "^3.0.8"
+  }
+}
