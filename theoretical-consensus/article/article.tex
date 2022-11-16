@@ -638,6 +638,85 @@ at the University of Tartu.
 \bibliography{bib}{}
 \bibliographystyle{unsrt}
 
+\section[Appendix. In-browser Proof-of-Work]{Appendix\\ {In-browser Proof-of-Work}}
+
+Along with this research, a simple practical prototype was developed
+to demonstrate the effectiveness of Proof-of-Work as a permissionless consensus protocol.
+The prototype was developed with the idea of being accessible to any device that supports
+the modern features of web browsers. Indeed, this prototype can run in a seemingly decentralized fashion,
+being delivered as a static web page, without the inherent need for a centralized hosting or backend server.
+The next sections will give more details about the implementation and design considerations, 
+as well as a short set of remarks and future work.
+
+\subsection{Implementation}
+
+This prototype was developed and shipped as a static web page.
+The base layer tooling choice resided in the \emph{Nuxt.js} framework, a meta-framework
+for building web applications based on \emph{Vue.js}. With that established,
+it became clear the need for a protocol for syncing and communicating in a 
+peer-to-peer way between the devices. The choice resided in the \emph{GUN} ecosystem,
+which ships a small but powerful set of tools for in-browser data synchronization.
+Since there was \emph{TypeScript} support from all the major dependencies of this project,
+this was the language chosen for the interactive web development. The cryptographic standards used in the 
+\emph{PoW} algorithm were imported from the \emph{crypto-js} library. And, finally, HTML and CSS, with the help
+of the \emph{Tailwind CSS} framework were used for styling and presentation.
+
+A major requirement for such a system is the capacity for parallel computations, 
+in order to be able to, simultaneously, listen for and validate proposed blocks, 
+present the current results in the screen, and mine new blocks. The traditional 
+\emph{JavaScript} computation model is a single-threaded environment that, naturally,
+does not allow for the efficient and effective handling of all these scenarios, happening
+at the same time. Most of the modern web browsers have a living solution for this problem, 
+and that is based on \emph{Web Workers}. This \emph{API} was used in order to offload
+the expensive mining computations and take that burden out of the main thread, leaving it
+with the responsibility of listening for information updates, either from other peers, with
+proposed blocks, or from the \emph{miner} threads, with new mined blocks, and decide and update
+the user interface accordingly.
+
+The remaining piece of the puzzle is the device discovery issue. The way the internet works does not
+allow for direct device pairing and easy peer discovery. The modern web generally follows a 
+client-server model with the centralization of resources. And, for this project, there was the need
+for a mechanism that would allow the peers to connect to each other to then proceed to synchronize
+the information. The \emph{GUN} ecosystem established a commonly accepted solution for this issue, that, 
+very shortly, depends on setting up \emph{relay} peers that have somewhat static addresses and that can 
+serve as reference points and pairing gateways for the nodes to discover and establish direct communications 
+with their peers. For development and demonstration purposes, multiple relay nodes were set up, running 
+as \emph{Docker} containers, with static ports and addresses, that could then be referenced in the web 
+page generation, for the other mobile and dynamic peers to connect to and make contacts with the rest of the network.
+The communication fashion is abstracted by the libraries used, but, generally, it happens either via \emph{WebSockets}
+or \emph{WebRTC} technology. Figure \ref{fig:in-browser-pow-topology} shows the topology of the whole system.
+
+\begin{figure*}[h]
+  \centering
+  \captionsetup{justification=centering}
+  % \includegraphics{in-browser-pow-topology}
+  \caption{blblb}
+  \label{fig:in-browser-pow-topology}
+\end{figure*}
+
+\subsection{Remarks}
+
+The prototype was tested, is demonstrable and works as intended. Some \emph{Nakamoto} chain-based
+features were simplified, for the sake of maintaining a didactic complexity. For example, 
+the Longest-Chain rule, in this prototype, works by having a temporary set of active blocks 
+that get appended to the main chain if there are new blocks mined on top
+of them. This setting enforces higher synchrony between the peers, as there is no mechanism for
+general chain data synchronization. This also means that a new peer joining the network does not
+need or does not ask for the rest of the chain history to start mining, but just the most recent block.
+Again, this is justified by the purpose of this prototype which was to demonstrate the achievement
+of consensus in a permissionless environment.
+
+No extensive benchmarks or analysis were made, other than live tests with multiple
+and heterogeneous devices. The basic tests involved one, two or more browser tabs
+opened in the same device, competing for mining the blocks. The distribution of blocks mined
+in a fixed and considerable interval was observed to be uniform for the participants. Another test was
+conducted with a laptop and a mobile device, for which, for obvious reasons, the laptop
+had a generally bigger advantage in the mining process.
+
+\subsection{Future Work}
+
+
+
 % that's all folks
 \end{document}
 
