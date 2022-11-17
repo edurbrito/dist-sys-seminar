@@ -80,7 +80,12 @@
 
 \title{The Units of Permissionless Consensus: \\ Towards Mobile and Edge Computing}
 
-\author{Eduardo Ribas Brito \\ eduardo.ribas.brito@ut.ee}
+\author{Eduardo Ribas Brito 
+\\Supervisors: Ulrich Norbisrath, Eero Vainikko
+\\Distributed Systems Seminar, Fall 2022
+\\\emph{Institute of Computer Science}
+\\\emph{University of Tartu, Estonia}
+\\ eduardo.ribas.brito@ut.ee}
 
 \maketitle
 
@@ -227,6 +232,15 @@ Agreement and Integrity are the most important ones, as they are the ones that
 guarantee the correctness of the consensus protocols. Termination and Validity
 are generally related to any classic consensus problem.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{building-blocks-consensus.png}
+  \caption{An illustration of the permissionless consensus building blocks - 
+  the block generation and proposal phases followed by the block validation, 
+  along with frequent network topology changes and the consequent serialization of the information.}
+  \label{fig:building-blocks-consensus}
+\end{figure}
+
 \subsection{The building blocks of permissionless consensus}
 
 Also described in \cite{survey-dist-consensus}, very concisely, the 
@@ -234,7 +248,7 @@ way to achieve an operating protocol, as seen in the mainstream blockchain
 networks, is by first generating the agreeable value, 
 in this particular case, a block and its proof, disseminating the information 
 to the rest of the network, followed by the eventual validation and 
-acceptance of the block by the rest of the nodes. This is the moment when consensus is reached.
+acceptance of the block by the rest of the nodes. This is the moment when consensus is reached (See Fig. \ref{fig:building-blocks-consensus}).
 Nevertheless, during the whole process, a fair and somewhat predictable incentive mechanism 
 is also needed, that rewards the participants for their honest effort in reaching consensus, and
 punishes the ones that are not behaving correctly. These incentives are of major importance
@@ -346,6 +360,26 @@ These limitations, along with other security concerns, may push away the
 participation of resourceless entities, and consequently, affect the network
 decentralization and security.
 
+\begin{algorithm}
+  \caption[short]{PoSBlockGeneration}\label{alg:PoSBlockGeneration}
+  \begin{algorithmic}[1]
+    \Function {}{}
+      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
+      \Indent
+        \State $| \ Hash \ of \ the \ last \ Block$
+        \State $| \ Timestamp$
+        \State $| \ Other$
+      \EndIndent
+      
+      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
+      \While{$Hash(BlockHeader \ | \ clockTime) \geq target \times stake $}
+      \State Increment $clockTime$ by a constant $tickInterval$
+      \EndWhile
+      \State \Return new block
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
 \subsubsection{Chain-based and Committee-based protocols}
 
 Due to the self-contained nature of this type of protocols, where the
@@ -374,26 +408,6 @@ increase in the committee size, which deteriorates the performance of the
 protocol. Several improvements have been proposed to tackle not only this
 issue, but also the security of the committees which, smaller, could be more
 vulnerable to targeted attacks \cite{david2018ouroboros}.
-
-\begin{algorithm}
-  \caption[short]{PoSBlockGeneration}\label{alg:PoSBlockGeneration}
-  \begin{algorithmic}[1]
-    \Function {}{}
-      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
-      \Indent
-        \State $| \ Hash \ of \ the \ last \ Block$
-        \State $| \ Timestamp$
-        \State $| \ Other$
-      \EndIndent
-      
-      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
-      \While{$Hash(BlockHeader \ | \ clockTime) \geq target \times stake $}
-      \State Increment $clockTime$ by a constant $tickInterval$
-      \EndWhile
-      \State \Return new block
-    \EndFunction
-  \end{algorithmic}
-\end{algorithm}
   
 \subsubsection{BFT-based protocols}
 
@@ -401,7 +415,7 @@ These aim at achieving deterministic finality, by employing a BFT
 consensus protocol, not at the block proposal level, but at the
 block acceptance level. The idea is to have a free flow of blocks
 proposed by the network, but to have a quorum of entities that
-are responsible for the block acceptance. The block proposal mechanism
+are responsible for the block acceptance. The block generation and proposal mechanism
 can be of any kind, for example, Chain-based \emph{PoS}, or Committee-based \emph{PoS},
 or even pure Proof-of-Work. The block acceptance layer then allows
 for a deterministic acceptance of the blocks, by having a sort of permissioned
@@ -414,6 +428,14 @@ where the consensus group is formed by a subset of the network entities,
 which are selected by the network, with a voting mechanism based on the
 delegation of stake. The consensus is then achieved using a typical 
 PBFT protocol, with the usual 1/3 Byzantine tolerance.
+
+\begin{figure*}[h]
+  \centering
+  \captionsetup{justification=centering}
+  \includegraphics[width=\textwidth]{proof-alternative-consensus}
+  \caption{From \cite{9376868}, an extensive list of pure proof alternative consensus mechanisms.}
+  \label{fig:proof-alternative-consensus}
+\end{figure*}
 
 \subsection{Proof-of-Something Else}
 
@@ -440,7 +462,7 @@ to computational power, this algorithm has its own fatal flaws, depending
 mostly on a central dealer for randomness as well as for consensus fairness.
 Other reported Proof-of-Space variants may not even attempt to store/retrieve any meaningful data.
 
-\subsubsection{Proof-of-Authority} is another well known derivative,
+\subsubsection{Proof-of-Authority} is another well known derivative
 which, in effect, is a form of Proof-of-Stake, where the stake is the 
 identity of the entity, that has been verified, scrutinized and
 approved by the network, giving it the right to participate in the
@@ -464,15 +486,7 @@ to combine the TEE feature with Proof-of-Stake, in order to achieve a
 more decentralized and secure protocol, but the 
 same hardware requirements are still a major issue.
 
-\begin{figure*}[h]
-  \centering
-  \captionsetup{justification=centering}
-  \includegraphics[width=\textwidth]{proof-alternative-consensus}
-  \caption{From \cite{9376868}, an extensive list of pure proof alternative consensus mechanisms.}
-  \label{fig:proof-alternative-consensus}
-\end{figure*}
-
-\subsubsection{Proof-of-Location} may be an alternative for envisioning a future where the
+\subsubsection{Proof-of-Location} may be an alternative for envisioning a future where
 consensus is achieved by taking advantage of the dynamism and easiness of movement, placement and 
 tracking of smaller and more location-versatile devices, such as mobile phones, IoT devices, etc.
 The idea behind this approach is to use the location and movement of these devices 
@@ -521,7 +535,7 @@ All the sibling vertices shall then represent disjoint transactions to successfu
 resolutions. Two well-known examples of this approach are IOTA Tangle \cite{popov2018tangle} 
 and Nano \cite{lemahieu2018nano}.
 The former is of particular interest, as it is especially designed for IoT applications, low-powered devices, and
-micro-transactions. The protocol states that every new vertex needs to be connected to two previous vertices, 
+microtransactions. The protocol states that every new vertex needs to be connected to two previous vertices, 
 therefore approving the parent transactions, as an incentive mechanism for honest behavior \cite{survey-dist-consensus}. 
 The users are the ones to submit transactions, generating and attaching a \emph{PoW} proof to it and 
 so guaranteeing probabilistic finality with 1/2 fault tolerance. This solution may indeed pair well with 
@@ -568,7 +582,7 @@ of these deployments \cite{SALIMITARI2020100212}:
   for better, faster and less costly maintenance of the network, assuring more availability and reliability
   and cutting the single-entity dependency;
   \item \emph{Security}: in terms of the network as a whole - removing the single-point-of-failure 
-  may reduce the attack surface, and may also allow or require more flexible and dynamic security policies;
+  may reduce the attack surface, and may also allow for more flexible and dynamic security policies;
   \item \emph{Privacy}: in terms of the network data exchange features - decentralizing may allow for
   a user-centric approach, where the users are in control of the data that is shared with the network; 
 \end{itemize}
@@ -614,7 +628,7 @@ A thoroughly mentioned approach is the IOTA Tangle protocol \cite{popov2018tangl
 presents a friendly design for resource-constrained networks, infinitely scalable, and with low latency.
 However, there are still known security and centralization limitations, as presented in the sections before \cite{8168250}.
 Another concept that has been explored is sharding \cite{SALIMITARI2020100212, queralta2021blockchain}, which is a
-technique that allows for the partitioning of the network into smaller sub-networks,
+technique that allows for the partitioning of the network into smaller subnetworks,
 that are then managed by different entities, validating transactions in parallel. 
 This approach may be used to overcome the scalability bottleneck,
 but it may also introduce new issues that are still to be researched.
@@ -628,7 +642,7 @@ as simply choosing a BFT protocol that is resource-efficient
 may also put us far apart from the ultimate decentralization and scalability goal of 
 other and fairer means of consensus participation.
 An interesting idea is based on the use of \emph{Proof of Location} for 
-coordinating the consensus. The easiness of movement and targetted location deployment
+coordinating the consensus. The easiness of movement and targeted location deployment
 of a lot of these low-power devices may be used to achieve a decentralized consensus
 protocol, where elected nodes may be somehow chosen based on their location, 
 either by proximity, or by some other witnessing mechanism. Variations and 
@@ -637,13 +651,13 @@ extensions of this idea, with different and wide use cases, have been seen in
 
 \section{Conclusion}
 
-In this paper, we have presented a comprehensive summary of the permissionless
-consensus problem, the most widely used consensus protocols, and the challenges
-that arise when applying these protocols to resource-constrained networks.
-We have presented the challenges that these networks are facing, and the 
-limitations of the existing consensus protocols.
+In this paper, it was presented a comprehensive summary of the permissionless
+consensus problem, along with a short analysis of the most widely used consensus 
+protocols, and the challenges that arise when applying these protocols to different environments.
+In particular, this paper presented the challenges that resource-constrained networks may be facing, 
+and the limitations of the existing consensus protocols when applied to this type of networks.
 We have also presented the main approaches that have been explored to address these challenges,
-and we have showed potential paths for future research.
+and showed some potential paths for future research.
 
 \section{Acknowledgements}
 
@@ -657,7 +671,11 @@ at the University of Tartu.
 \bibliography{bib}{}
 \bibliographystyle{unsrt}
 
+\newpage 
+
 \section[Appendix. In-browser Proof-of-Work]{Appendix\\ {In-browser Proof-of-Work}}
+
+\bigbreak
 
 Along with this research, a simple practical prototype was developed
 to demonstrate the effectiveness of Proof-of-Work as a permissionless consensus protocol.
@@ -679,6 +697,13 @@ Since there was \emph{TypeScript} support from all the major dependencies of thi
 this was the language chosen for the interactive web development \cite{typescript}. The cryptographic standards used in the 
 \emph{PoW} algorithm were imported from the \emph{crypto-js} library \cite{crypto-js}. And, finally, HTML and CSS, with the help
 of the \emph{Tailwind CSS} framework \cite{tailwindcss} were used for styling and presentation.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{in-browser-pow-topology}
+  \caption{The topology of the system, with an underlay network of relay servers that allow the overlay network of devices to discover their peers and establish direct connections.}
+  \label{fig:in-browser-pow-topology}
+\end{figure}
 
 A major requirement for such a system is the capacity for parallel computations, 
 in order to be able to, simultaneously, listen for and validate proposed blocks, 
@@ -705,14 +730,6 @@ page generation, for the other mobile and dynamic peers to connect to and make c
 The communication fashion is abstracted by the libraries used, but, generally, it happens either via \emph{WebSockets}
 or \emph{WebRTC} technology. Figure \ref{fig:in-browser-pow-topology} shows the topology of the whole system.
 
-\begin{figure*}[h]
-  \centering
-  \captionsetup{justification=centering}
-  % \includegraphics{in-browser-pow-topology}
-  \caption{blblb}
-  \label{fig:in-browser-pow-topology}
-\end{figure*}
-
 \subsection{Remarks}
 
 The prototype was tested, is demonstrable and works as intended. Some \emph{Nakamoto} chain-based
@@ -733,19 +750,32 @@ in a fixed and considerable interval was observed to be uniform for the particip
 conducted with a laptop and a mobile device, for which, for obvious reasons, the laptop
 had a generally bigger advantage in the mining process.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{in-browser-pow}
+  \caption{The user interface showing three browser tabs opened and competing for mining the next blocks, 
+  while achieving consensus and presenting the same view.}
+  \label{fig:in-browser-pow}
+\end{figure}
+
 \subsection{Future Work}
 
 The prototype was developed as a proof-of-concept and a demonstration of the feasibility
 of the \emph{PoW} consensus protocol in a permissionless environment. The next steps
 for this project would be to extend the functionality and the features of the system,
-in order to make it more robust and usable. Some of the ideas for future work are, for example,
+in order to make it more robust and usable. Some ideas for future work are, for example,
 the improvement of the \emph{PoW} algorithm, by adding a difficulty adjustment mechanism,
 to make the mining process more fair for computationally weaker devices, or to
 add a mechanism for the synchronization of the old chain history. Another idea would be to
 improve the parallelization of the computations, by more efficiently distributing the
 workload among mining threads. Finally, the user interface could be improved 
 with more informative and interactive features, that would allow the user to have a 
-deeper understanding of the system and the consensus process.
+deeper understanding of the system and the consensus process (See Fig. \ref{fig:in-browser-pow}).
+
+\subsection{Repository}
+
+All the work developed, both the practical and the theoretical components, can be found 
+at \emph{\url{https://github.com/edurbrito/dist-sys-seminar}}.
 
 % that's all folks
 \end{document}
