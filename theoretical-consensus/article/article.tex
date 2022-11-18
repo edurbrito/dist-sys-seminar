@@ -265,26 +265,6 @@ block generation proof units.
 \section{Proof-of-Work as a reference}
 
 \subsection{The block generation}
-
-\begin{algorithm}
-  \caption[short]{BlockGeneration}\label{alg:BlockGeneration}
-  \begin{algorithmic}[1]
-    \Function {}{}
-      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
-      \Indent
-        \State $| \ Hash \ of \ the \ last \ Block$
-        \State $| \ Timestamp$
-        \State $| \ Other$
-      \EndIndent
-      
-      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
-      \While{$Hash(BlockHeader \ | \ nonce) \geq target$}
-      \State Increment $nonce$
-      \EndWhile
-      \State \Return new block
-    \EndFunction
-  \end{algorithmic}
-  \end{algorithm}
   
 In the classical Nakamoto consensus protocol, the generation of a block, to be proposed
 for further network agreement, complies with the unit of computational work needed to
@@ -304,6 +284,26 @@ threshold, is also of major importance because it reduces the fork probability a
 allows for the timely propagation of proposed blocks, guaranteeing consensus
 in the presence of an honest majority of the hashing power \cite{garay2015bitcoin, natoli2019deconstructing}.
 This probabilistic finality shifts the 1/3 BFT threshold to a 1/2 threshold.
+
+\begin{algorithm}
+  \caption[short]{BlockGeneration}\label{alg:BlockGeneration}
+  \begin{algorithmic}[1]
+    \Function {}{}
+      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
+      \Indent
+        \State $| \ Hash \ of \ the \ last \ Block$
+        \State $| \ Timestamp$
+        \State $| \ Other$
+      \EndIndent
+      
+      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
+      \While{$Hash(BlockHeader \ | \ nonce) \geq target$}
+      \State Increment $nonce$
+      \EndWhile
+      \State \Return new block
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 \subsection{Trade-offs and trilemma}
 
@@ -360,26 +360,6 @@ These limitations, along with other security concerns, may push away the
 participation of resourceless entities, and consequently, affect the network
 decentralization and security.
 
-\begin{algorithm}
-  \caption[short]{PoSBlockGeneration}\label{alg:PoSBlockGeneration}
-  \begin{algorithmic}[1]
-    \Function {}{}
-      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
-      \Indent
-        \State $| \ Hash \ of \ the \ last \ Block$
-        \State $| \ Timestamp$
-        \State $| \ Other$
-      \EndIndent
-      
-      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
-      \While{$Hash(BlockHeader \ | \ clockTime) \geq target \times stake $}
-      \State Increment $clockTime$ by a constant $tickInterval$
-      \EndWhile
-      \State \Return new block
-    \EndFunction
-  \end{algorithmic}
-\end{algorithm}
-
 \subsubsection{Chain-based and Committee-based protocols}
 
 Due to the self-contained nature of this type of protocols, where the
@@ -428,6 +408,26 @@ where the consensus group is formed by a subset of the network entities,
 which are selected by the network, with a voting mechanism based on the
 delegation of stake. The consensus is then achieved using a typical 
 PBFT protocol, with the usual 1/3 Byzantine tolerance.
+
+\begin{algorithm}
+  \caption[short]{PoSBlockGeneration}\label{alg:PoSBlockGeneration}
+  \begin{algorithmic}[1]
+    \Function {}{}
+      \State $Block Header \gets Transaction \ Merkle \ Tree \ Root$
+      \Indent
+        \State $| \ Hash \ of \ the \ last \ Block$
+        \State $| \ Timestamp$
+        \State $| \ Other$
+      \EndIndent
+      
+      \LineComment{the preceding zero bits in $target$ depict the mining difficulty}
+      \While{$Hash(BlockHeader \ | \ clockTime) \geq target \times stake $}
+      \State Increment $clockTime$ by a constant $tickInterval$
+      \EndWhile
+      \State \Return new block
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
 
 \begin{figure*}[h]
   \centering
@@ -698,13 +698,6 @@ this was the language chosen for the interactive web development \cite{typescrip
 \emph{PoW} algorithm were imported from the \emph{crypto-js} library \cite{crypto-js}. And, finally, HTML and CSS, with the help
 of the \emph{Tailwind CSS} framework \cite{tailwindcss} were used for styling and presentation.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\columnwidth]{in-browser-pow-topology}
-  \caption{The topology of the system, with an underlay network of relay servers that allow the overlay network of devices to discover their peers and establish direct connections.}
-  \label{fig:in-browser-pow-topology}
-\end{figure}
-
 A major requirement for such a system is the capacity for parallel computations, 
 in order to be able to, simultaneously, listen for and validate proposed blocks, 
 present the current results in the screen, and mine new blocks. The traditional 
@@ -728,7 +721,14 @@ with their peers. For development and demonstration purposes, multiple relay nod
 as \emph{Docker} containers, with static ports and addresses, that could then be referenced in the web 
 page generation, for the other mobile and dynamic peers to connect to and make contacts with the rest of the network.
 The communication fashion is abstracted by the libraries used, but, generally, it happens either via \emph{WebSockets}
-or \emph{WebRTC} technology. Figure \ref{fig:in-browser-pow-topology} shows the topology of the whole system.
+or \emph{WebRTC} technology. Fig. \ref{fig:in-browser-pow-topology} shows the topology of the whole system.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{in-browser-pow-topology}
+  \caption{The topology of the system, with an underlay network of relay servers that allow the overlay network of devices to discover their peers and establish direct connections.}
+  \label{fig:in-browser-pow-topology}
+\end{figure}
 
 \subsection{Remarks}
 
@@ -750,14 +750,6 @@ in a fixed and considerable interval was observed to be uniform for the particip
 conducted with a laptop and a mobile device, for which, for obvious reasons, the laptop
 had a generally bigger advantage in the mining process.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\columnwidth]{in-browser-pow}
-  \caption{The user interface showing three browser tabs opened and competing for mining the next blocks, 
-  while achieving consensus and presenting the same view.}
-  \label{fig:in-browser-pow}
-\end{figure}
-
 \subsection{Future Work}
 
 The prototype was developed as a proof-of-concept and a demonstration of the feasibility
@@ -771,6 +763,14 @@ improve the parallelization of the computations, by more efficiently distributin
 workload among mining threads. Finally, the user interface could be improved 
 with more informative and interactive features, that would allow the user to have a 
 deeper understanding of the system and the consensus process (See Fig. \ref{fig:in-browser-pow}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\columnwidth]{in-browser-pow}
+  \caption{The user interface showing three browser tabs opened and competing for mining the next blocks, 
+  while achieving consensus and presenting the same view.}
+  \label{fig:in-browser-pow}
+\end{figure}
 
 \subsection{Repository}
 
