@@ -32,6 +32,12 @@ The prototype was developed as a proof-of-concept and a demonstration of the fea
 
 The `.env` file contains the environment variables needed to run the project.
 
+```.env
+# comma separated
+GUN_RELAYS="http://localhost:8765/gun,http://localhost:8766/gun,http://localhost:8767/gun"
+DIFFICULTY="5"
+```
+
 Relay peers can be set up with the following commands:
 
 * Build the image (tested on Linux):

@@ -36,6 +36,6 @@ export class Block {
     }
 
     static genesisBlock(): Block {
-        return new Block('0000003466f7289d52851720ad259c88f192604759e34ece83d6eb74fa03b5ed', '', 9865212, 'edurbrito');
+        return new Block('04ff496d58aae22254d59665a4a5e9dd2a011247b2414c5d8b8456a0353f5761', '', 112358, 'dddddd-edurbrito');
     }
 }
