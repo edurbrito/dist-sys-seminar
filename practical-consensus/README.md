@@ -1,5 +1,8 @@
 # In-Browser Proof-of-Work
 
+> ![In-Browser Proof-of-Work](./docs/pow-2022-11-13_20.01.45.gif)
+> Animated GIF of the In-Browser Proof-of-Work.
+
 Along with the seminar research, a simple practical prototype was developed to demonstrate the effectiveness of Proof-of-Work as a permissionless consensus protocol. The prototype was developed with the idea of being accessible to any device that supports the modern features of web browsers. Indeed, this prototype can run in a seemingly decentralized fashion, being delivered as a static web page, without the inherent need for a centralized hosting or backend server. The next sections will give more details about the implementation and design considerations, as well as a short set of remarks and future work.
 
 ### Implementation
