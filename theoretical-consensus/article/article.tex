@@ -192,7 +192,8 @@ for permissionless consensus when there are already well known and established c
 that work in trusted environments \cite{castro1999practical, miller2016honey}. However, even those protocols have
 their own limitations, not only in terms of trust, fault-tolerance, centrality, permissions,
 or bottlenecks, but also in terms of scalability \cite{miller2016honey}. Trying to put some effort on decentralization, 
-Byzantine-Fault-Tolerant consensus protocols are not known for their performance when the network grows
+Byzantine-Fault-Tolerant consensus protocols, hereinafter abbreviated as BFT protocols, 
+are not known for their performance when the network grows
 in size. The more participants there are, the more messages need to be exchanged
 between them, and the more time it takes to reach consensus, even if assuring deterministic finality \cite{decker2016bitcoin}. 
 This is a problem that is not only related to the number of participants, but also to the
@@ -275,10 +276,12 @@ a difficulty threshold (See Algorithm \ref{alg:BlockGeneration}), which gets adj
 requirement for the block generation interval \cite{8629877, survey-dist-consensus}.
 
 There are a couple of particularities that need to be mentioned. First, the block generation
-is of probabilistic nature, as the nonce is a random value, and the hash function is a one-way function.
+is of probabilistic nature, as the nonce is a random value, often of the form of a counter, 
+and the hash function is a one-way function.
 Allied to this, increasing the hashing power is not an easy task, which consequently allows for tackling Sybil attacks,
 despite the permissionless and pseudonymity nature of the network. Plus, the incentive mechanism
-also plays a role in this regard, by naturally incentivizing honest participation.
+also plays a role in this regard, by naturally incentivizing honest participation, at the application level, 
+for example, in the form of monetary rewards, in the case of Bitcoin \cite{nakamoto2008bitcoin}.
 The block generation interval, forged by the adjustment of the difficulty
 threshold, is also of major importance because it reduces the fork probability and
 allows for the timely propagation of proposed blocks, guaranteeing consensus
@@ -393,7 +396,8 @@ vulnerable to targeted attacks \cite{david2018ouroboros}.
 
 These aim at achieving deterministic finality, by employing a BFT
 consensus protocol, not at the block proposal level, but at the
-block acceptance level. The idea is to have a free flow of blocks
+block validation or acceptance level (See Fig. \ref{fig:building-blocks-consensus}).
+The idea is to have a free flow of blocks
 proposed by the network, but to have a quorum of entities that
 are responsible for the block acceptance. The block generation and proposal mechanism
 can be of any kind, for example, Chain-based \emph{PoS}, or Committee-based \emph{PoS},
@@ -593,7 +597,7 @@ as long as consensus is achieved, the network as a whole can be abstractly seen 
 as a trusted entity that runs as a trustless decentralized service. Applications may then
 be built on top of it, and the network may be used as a platform for other services \cite{queralta2021blockchain}.
 However, there are some key aspects that need to be addressed
-in order to make this approach viable for resource-constrained networks, as we saw in the previous section:
+in order to make this approach viable for resource-constrained networks, with regard to their characteristics. These aspects are:
 
 \begin{itemize}
   \item \emph{Resource consumption}: the consensus protocols should be resource-efficient, for example, in terms of energy, bandwidth, or storage, 
@@ -654,9 +658,15 @@ extensions of this idea, with different and wide use cases, have been seen in
 In this paper, it was presented a comprehensive summary of the permissionless
 consensus problem, along with a short analysis of the most widely used consensus 
 protocols, and the challenges that arise when applying these protocols to different environments.
-In particular, this paper presented the challenges that resource-constrained networks may be facing, 
+We reasoned about the need for permissionless consensus, and showed that most of the existing
+consensus protocols follow a very similar phased design, often differing only in the block
+generation phase, or in the consensus proof units, concluding that those design choices are usually 
+related with the trade-offs imposed by the blockchain trilemma.
+We also presented some other approaches that deviate from that common
+structural design, and that may be more suitable for some specific network environments.
+In particular, this paper finished presenting the challenges that resource-constrained networks may be facing, 
 and the limitations of the existing consensus protocols when applied to this type of networks.
-We have also presented the main approaches that have been explored to address these challenges,
+We also argued about the main approaches that have been explored to address these challenges,
 and showed some potential paths for future research.
 
 \section{Acknowledgements}
