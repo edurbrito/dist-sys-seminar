@@ -13,18 +13,18 @@ of the consensus problem in the realms of distributed systems.
 And consensus can be pretty much defined as
 reaching an agreement between multiple parties
 in the presence of potentially faulty individuals.
+
+
 This definition was pioneered by Lamport some time ago
 and along with it there came the first very basic 
 synchronous solutions for the consensus problem.
-
-
 These initial attempts failed at considering interesting challenges.
-And allegorically, one of the most famous problems in distributed systems
+And with that, one of the most famous problems in distributed systems
 was finally born: The Byzantine general's problem.
-Along with it, the first protocols that were already considering
+Along with it, the first protocols that started considering
 some types of faulty or Byzantine behavior were finally proposed.
 But at this point, these mechanisms were mostly based on 
-the knowledge or the role definition
+the knowledge or the definition of the roles
 of the participating peers, and so only able to run in permissioned systems.
 
 
